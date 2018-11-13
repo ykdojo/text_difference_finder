@@ -30,16 +30,26 @@
           )
         );
 
-        return TD(s1, s2, 0, 0, memo)["result"];
+        let tdResultObj = TD(s1, s2, 0, 0, memo);
+        return tdResultObj.result;
+      }
+
+      function append(resultArray, toAppend, isPartOfLCA) {
+        if (resultArray[0][1] == isPartOfLCA) {
+          resultArray[0][0] = toAppend + resultArray[0][0];
+        } else {
+          resultArray.unshift([toAppend, isPartOfLCA]);
+        }
       }
 
       function TD(s1, s2, i1, i2, memo) {
         if (s1.length == i1 || s2.length == i2 ) {
           let result1 = s1.slice(i1, s1.length);
           let result2 = s2.slice(i2, s2.length);
-          return {result: "",
-                  result1: [[result1, false]],
-                  result2: [[result2, false]]};
+          let resultObj = {result: "",
+                           result1: [[result1, false]],
+                           result2: [[result2, false]]}
+          return resultObj;
         }
 
         if (memo[i1][i2]["result"] !== undefined) {
@@ -56,20 +66,28 @@
             i1_current += 1;
             i2_current += 1;
           }
-          memo[i1][i2]["result"] =
-            result_prefix + TD(s1, s2, i1_current, i2_current, memo)["result"];
+
+          let next_result = TD(s1, s2, i1_current, i2_current, memo);
+
+          let resultObj = JSON.parse(JSON.stringify(next_result));
+          resultObj["result"] = result_prefix + resultObj["result"];
+          append(resultObj["result1"], result_prefix, true);
+          append(resultObj["result2"], result_prefix, true);
+          memo[i1][i2] = resultObj;
           return memo[i1][i2];
         }
 
-        let result;
-        let resultA = TD(s1, s2, i1 + 1, i2, memo)["result"];
-        let resultB = TD(s1, s2, i1, i2 + 1, memo)["result"];
-        if(resultA.length >= resultB.length) {
-          result = resultA;
+        let resultObj;
+        let resultA = TD(s1, s2, i1 + 1, i2, memo);
+        let resultB = TD(s1, s2, i1, i2 + 1, memo);
+        if(resultA.result.length >= resultB.result.length) {
+          resultObj = JSON.parse(JSON.stringify(resultA));
+          append(resultObj.result1, s1[i1], false);
         } else {
-          result = resultB;
+          resultObj = JSON.parse(JSON.stringify(resultB));
+          append(resultObj.result2, s2[i2], false);
         }
-        memo[i1][i2]["result"] = result;
+        memo[i1][i2] = resultObj;
         return memo[i1][i2];
       }
 
@@ -85,9 +103,8 @@
       let TS7 = ["ab", "ac", "a"];
       let TS8 = ["a", "a", "a"];
 
-      // let testSets = [TS8];
-      let testSets = [TS0, TS1, TS2, TS3, TS4, TS5];
-      // let testSets = [TS7];
+      // let testSets = [TS0, TS1, TS2, TS3, TS4, TS5];
+      let testSets = [TS5];
 
       testSets.forEach(function(testSet) {
         document.getElementById("results").innerHTML +=
