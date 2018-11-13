@@ -35,7 +35,9 @@
 
       function TD(s1, s2, i1, i2, memo) {
         if(s1.length == i1 || s2.length == i2 ) {
-          return {result: ""};
+          result1 = s1.slice(i1, s1.length);
+          result2 = s2.slice(i2, s2.length);
+          return {result: "", result1: [[result1, false]], result2: [[result2, false]]};
         }
 
         if (memo[i1][i2]["result"] !== undefined) {
