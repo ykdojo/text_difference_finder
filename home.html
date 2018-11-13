@@ -30,33 +30,33 @@
           )
         );
 
-        return TD(s1, s2, 0, 0, memo);
+        return TD(s1, s2, 0, 0, memo)["result"];
       }
 
       function TD(s1, s2, i1, i2, memo) {
         if(s1.length == i1 || s2.length == i2 ) {
-          return "";
+          return {result: ""};
         }
 
         if (memo[i1][i2]["result"] !== undefined) {
-          return memo[i1][i2]["result"];
+          return memo[i1][i2];
         }
 
         if(s1[i1] == s2[i2]) {
-          memo[i1][i2]["result"] = s1[i1] + TD(s1, s2, i1 + 1, i2 + 1, memo);
-          return memo[i1][i2]["result"];
+          memo[i1][i2]["result"] = s1[i1] + TD(s1, s2, i1 + 1, i2 + 1, memo)["result"];
+          return memo[i1][i2];
         }
 
         let result;
-        let resultA = TD(s1, s2, i1 + 1, i2, memo);
-        let resultB = TD(s1, s2, i1, i2 + 1, memo);
+        let resultA = TD(s1, s2, i1 + 1, i2, memo)["result"];
+        let resultB = TD(s1, s2, i1, i2 + 1, memo)["result"];
         if(resultA.length >= resultB.length) {
           result = resultA;
         } else {
           result = resultB;
         }
         memo[i1][i2]["result"] = result;
-        return memo[i1][i2]["result"];
+        return memo[i1][i2];
       }
 
       let testSet0 = ["abcde", "bfkcdepqr", "bcde"];
@@ -67,7 +67,7 @@
       let testSet5 = ["breakfast I had tooday was aweeesome",
                       "the breakfast I had today was awesome",
                       "breakfast I had today was awesome"];
-      let testSet6 = [Array(500).join('a'), Array(500).join('b'), ""];
+      let testSet6 = [Array(500).join('a'), Array(700).join('b'), ""];
 
       // let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5];
       let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5, testSet6];
