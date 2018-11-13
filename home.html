@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <style>
+      .bold-italic {
+        font-weight: bold;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="results"></div>
+
+    <script>
+      function showTextDiffResult(s1, s2, expected) {
+        let result = "<p>" +
+                     "<div><span class='bold-italic'>Original text: </span>" + s1 + "</div>" +
+                     "<div><span class='bold-italic'>Edited text: </span>" + s2 + "</div>" +
+                     "<div><span class='bold-italic'>Expected result: </span>" + expected + "</div>" +
+                     "<div><span class='bold-italic'>Actual result: </span>" + textDiff(s1, s2) + "</div>" +
+                     "</p>";
+        return result;
+      }
+
+      function textDiff(s1, s2) {
+        let memo = Array(s1.length).fill(null).map(
+          e => Array(s2.length).fill(null).map(
+            e => Array(3).fill(null).map(
+              e => Object()
+            )
+          )
+        );
+
+        return TD(s1, s2, 0, 0, memo);
+      }
+
+      function TD(s1, s2, i1, i2, memo) {
+        if(s1.length == i1 || s2.length == i2 ) {
+          return "";
+        }
+
+        if (memo[i1][i2]["result"] !== undefined) {
+          return memo[i1][i2]["result"];
+        }
+
+        if(s1[i1] == s2[i2]) {
+          memo[i1][i2]["result"] = s1[i1] + TD(s1, s2, i1 + 1, i2 + 1, memo);
+          return memo[i1][i2]["result"];
+        }
+
+        let result;
+        let resultA = TD(s1, s2, i1 + 1, i2, memo);
+        let resultB = TD(s1, s2, i1, i2 + 1, memo);
+        if(resultA.length >= resultB.length) {
+          result = resultA;
+        } else {
+          result = resultB;
+        }
+        memo[i1][i2]["result"] = result;
+        return memo[i1][i2]["result"];
+      }
+
+      let testSet0 = ["abcde", "bfkcdepqr", "bcde"];
+      let testSet1 = ["aaa", "bbb", ""];
+      let testSet2 = ["abc", "defg", ""];
+      let testSet3 = ["abd", "bcd", "bd"];
+      let testSet4 = ["abcd", "afkd", "ad"];
+      let testSet5 = ["breakfast I had tooday was aweeesome",
+                      "the breakfast I had today was awesome",
+                      "breakfast I had today was awesome"];
+      let testSet6 = [Array(500).join('a'), Array(500).join('b'), ""];
+
+      // let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5];
+      let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5, testSet6];
+
+      testSets.forEach(function(testSet) {
+        document.getElementById("results").innerHTML +=
+          showTextDiffResult(testSet[0], testSet[1], testSet[2]);
+      });
+    </script>
+  </body>
+</html>
