@@ -23,11 +23,7 @@
 
       function textDiff(s1, s2) {
         let memo = Array(s1.length).fill(null).map(
-          e => Array(s2.length).fill(null).map(
-            e => Array(3).fill(null).map(
-              e => Object()
-            )
-          )
+          e => Array(s2.length)
         );
 
         return TD(s1, s2, 0, 0, memo);
@@ -38,13 +34,13 @@
           return "";
         }
 
-        if (memo[i1][i2]["result"] !== undefined) {
-          return memo[i1][i2]["result"];
+        if (memo[i1][i2] !== undefined) {
+          return memo[i1][i2];
         }
 
         if(s1[i1] == s2[i2]) {
-          memo[i1][i2]["result"] = s1[i1] + TD(s1, s2, i1 + 1, i2 + 1, memo);
-          return memo[i1][i2]["result"];
+          memo[i1][i2] = s1[i1] + TD(s1, s2, i1 + 1, i2 + 1, memo);
+          return memo[i1][i2];
         }
 
         let result;
@@ -55,8 +51,8 @@
         } else {
           result = resultB;
         }
-        memo[i1][i2]["result"] = result;
-        return memo[i1][i2]["result"];
+        memo[i1][i2] = result;
+        return memo[i1][i2];
       }
 
       let testSet0 = ["abcde", "bfkcdepqr", "bcde"];
