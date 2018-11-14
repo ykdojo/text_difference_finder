@@ -37,27 +37,15 @@
         if(s1.length == i1 || s2.length == i2 ) {
           let result1 = s1.slice(i1, s1.length);
           let result2 = s2.slice(i2, s2.length);
-          return {result: "",
-                  result1: [[result1, false]],
-                  result2: [[result2, false]]};
+          return {result: "", result1: [[result1, false]], result2: [[result2, false]]};
         }
 
         if (memo[i1][i2]["result"] !== undefined) {
           return memo[i1][i2];
         }
 
-        if (s1[i1] == s2[i2]) {
-          let i1_current = i1;
-          let i2_current = i2;
-          let result_prefix = "";
-          while(s1[i1_current] == s2[i2_current] &&
-                i1_current < s1.length && i2_current < s2.length) {
-            result_prefix += s1[i1_current];
-            i1_current += 1;
-            i2_current += 1;
-          }
-          memo[i1][i2]["result"] =
-            result_prefix + TD(s1, s2, i1_current, i2_current, memo)["result"];
+        if(s1[i1] == s2[i2]) {
+          memo[i1][i2]["result"] = s1[i1] + TD(s1, s2, i1 + 1, i2 + 1, memo)["result"];
           return memo[i1][i2];
         }
 
@@ -73,21 +61,18 @@
         return memo[i1][i2];
       }
 
-      let TS0 = ["abcde", "bfkcdepqr", "bcde"];
-      let TS1 = ["aaa", "bbb", ""];
-      let TS2 = ["abc", "defg", ""];
-      let TS3 = ["abd", "bcd", "bd"];
-      let TS4 = ["abcddk", "afkddk", "addk"];
-      let TS5 = ["breakfast I had tooday was aweeesome",
+      let testSet0 = ["abcde", "bfkcdepqr", "bcde"];
+      let testSet1 = ["aaa", "bbb", ""];
+      let testSet2 = ["abc", "defg", ""];
+      let testSet3 = ["abd", "bcd", "bd"];
+      let testSet4 = ["abcdd", "afkdd", "add"];
+      let testSet5 = ["breakfast I had tooday was aweeesome",
                       "the breakfast I had today was awesome",
                       "breakfast I had today was awesome"];
-      let TS6 = [Array(500).join('a'), Array(700).join('b'), ""];
-      let TS7 = ["ab", "ac", "a"];
-      let TS8 = ["a", "a", "a"];
+      let testSet6 = [Array(500).join('a'), Array(700).join('b'), ""];
 
-      // let testSets = [TS8];
-      let testSets = [TS0, TS1, TS2, TS3, TS4, TS5];
-      // let testSets = [TS7];
+      // let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5];
+      let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5, testSet6];
 
       testSets.forEach(function(testSet) {
         document.getElementById("results").innerHTML +=
