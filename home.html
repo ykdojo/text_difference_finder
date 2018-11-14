@@ -1,17 +1,9 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
     <style>
       .bold-italic {
         font-weight: bold;
         font-style: italic;
-      }
-      .deleted {
-        background-color: red;
-      }
-      .added {
-        background-color: green;
       }
     </style>
   </head>
@@ -23,24 +15,10 @@
         let result = "<p>" +
                      "<div><span class='bold-italic'>Original text: </span>" + s1 + "</div>" +
                      "<div><span class='bold-italic'>Edited text: </span>" + s2 + "</div>" +
-                     "<div><span class='bold-italic'>Expected LCS: </span>" + expected + "</div>" +
-                     "<div><span class='bold-italic'>Actual LCS: </span>" + textDiff(s1, s2).result + "</div>" +
-                     "<div><span class='bold-italic'>Deleted: </span>" + textDiff(s1, s2).result1HTML + "</div>" +
-                     "<div><span class='bold-italic'>Added: </span>" + textDiff(s1, s2).result2HTML + "</div>" +
+                     "<div><span class='bold-italic'>Expected result: </span>" + expected + "</div>" +
+                     "<div><span class='bold-italic'>Actual result: </span>" + textDiff(s1, s2) + "</div>" +
                      "</p>";
         return result;
-      }
-
-      function convertResultToHTML(resultArray, className) {
-        let resultInHTML = '';
-        resultArray.forEach(function(x){
-          if(x[1]) {
-            resultInHTML += `<span>${x[0]}</span>`;
-          } else {
-            resultInHTML += `<span class="${className}">${x[0]}</span>`;
-          }
-        });
-        return resultInHTML;
       }
 
       function textDiff(s1, s2) {
@@ -53,9 +31,7 @@
         );
 
         let tdResultObj = TD(s1, s2, 0, 0, memo);
-        tdResultObj.result1HTML = convertResultToHTML(tdResultObj.result1, "deleted");
-        tdResultObj.result2HTML = convertResultToHTML(tdResultObj.result2, "added");
-        return tdResultObj;
+        return tdResultObj.result;
       }
 
       function append(resultArray, toAppend, isPartOfLCA) {
@@ -127,9 +103,8 @@
       let TS7 = ["ab", "ac", "a"];
       let TS8 = ["a", "a", "a"];
 
-      let testSets = [TS0, TS1, TS2, TS3, TS4, TS5];
-      // let testSets = [TS0, TS1, TS2, TS3, TS4, TS5, TS6];
-      // let testSets = [TS5];
+      // let testSets = [TS0, TS1, TS2, TS3, TS4, TS5];
+      let testSets = [TS5];
 
       testSets.forEach(function(testSet) {
         document.getElementById("results").innerHTML +=
