@@ -5,6 +5,14 @@
         font-weight: bold;
         font-style: italic;
       }
+
+      .deleted {
+        background-color: red;
+      }
+
+      .added {
+        background-color: green;
+      }
     </style>
   </head>
   <body>
@@ -12,12 +20,15 @@
 
     <script>
       function showTextDiffResult(s1, s2, expected) {
+        let tdResult = textDiff(s1, s2);
         let result =
         `<p>
           <div><span class='bold-italic'>Original text: </span>${s1}</div>
           <div><span class='bold-italic'>Edited text: </span>${s2}</div>
           <div><span class='bold-italic'>Expected result: </span>${expected}</div>
-          <div><span class='bold-italic'>Actual result: </span>${textDiff(s1, s2)}</div>
+          <div><span class='bold-italic'>Actual result: </span>${tdResult.lca}</div>
+          <div><span class='bold-italic'>Deleted: </span>${tdResult.s1Result}</div>
+          <div><span class='bold-italic'>Added: </span>${tdResult.s2Result}</div>
         </p>`;
         return result;
       }
@@ -27,7 +38,31 @@
           e => Array(s2.length)
         );
 
-        return TD(s1, s2, 0, 0, memo);
+        let tdResult = TD(s1, s2, 0, 0, memo);
+
+        let s1Result = "";
+        let s2Result = "";
+        let i1 = 0;
+        let i2 = 0;
+        for (i = 0; i < tdResult.length; i++){
+          let commonChar = tdResult[i];
+          i1Next = s1.indexOf(commonChar, i1);
+          if (i1Next > i1) {
+            s1Deleted = s1.substring(i1, i1Next);
+            s1Result += `<span class='deleted'>${s1Deleted}</span>`;
+          }
+          s1Result += commonChar;
+          i1 = i1Next + 1;
+
+          i2Next = s2.indexOf(commonChar, i2);
+          if (i2Next > i2) {
+            s2Added = s2.substring(i2, i2Next);
+            s2Result += `<span class='added'>${s2Added}</span>`;
+          }
+          s2Result += commonChar;
+          i2 = i2Next + 1;
+        }
+        return {lca: tdResult, s1Result: s1Result, s2Result: s2Result};
       }
 
       function TD(s1, s2, i1, i2, memo) {
