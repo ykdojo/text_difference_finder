@@ -12,12 +12,12 @@
 
     <script>
       function showTextDiffResult(s1, s2, expected) {
-        let result = "<p>" +
-                     "<div><span class='bold-italic'>Original text: </span>" + s1 + "</div>" +
-                     "<div><span class='bold-italic'>Edited text: </span>" + s2 + "</div>" +
-                     "<div><span class='bold-italic'>Expected result: </span>" + expected + "</div>" +
-                     "<div><span class='bold-italic'>Actual result: </span>" + textDiff(s1, s2) + "</div>" +
-                     "</p>";
+        let result = `<p>
+                     <div><span class='bold-italic'>Original text: </span>${s1}</div>
+                     <div><span class='bold-italic'>Edited text: </span>${s2}</div>
+                     <div><span class='bold-italic'>Expected result: </span>${expected}</div>
+                     <div><span class='bold-italic'>Actual result: </span>${textDiff(s1, s2)}</div>
+                     </p>`;
         return result;
       }
 
