@@ -43,10 +43,7 @@
       }
 
       function textDiff(s1, s2) {
-        let memo = Array(s1.length).fill(null).map(
-          e => Array(s2.length)
-        );
-
+        let memo = [...Array(s1.length)].map(e => Array(s2.length));
         let tdResult = TD(s1, s2, 0, 0, memo);
 
         let s1Result = [];
