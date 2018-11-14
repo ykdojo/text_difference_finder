@@ -35,8 +35,8 @@
 
       function TD(s1, s2, i1, i2, memo) {
         if(s1.length == i1 || s2.length == i2 ) {
-          let result1 = s1.slice(i1, s1.length);
-          let result2 = s2.slice(i2, s2.length);
+          result1 = s1.slice(i1, s1.length);
+          result2 = s2.slice(i2, s2.length);
           return {result: "", result1: [[result1, false]], result2: [[result2, false]]};
         }
 
@@ -65,7 +65,7 @@
       let testSet1 = ["aaa", "bbb", ""];
       let testSet2 = ["abc", "defg", ""];
       let testSet3 = ["abd", "bcd", "bd"];
-      let testSet4 = ["abcdd", "afkdd", "add"];
+      let testSet4 = ["abcd", "afkd", "ad"];
       let testSet5 = ["breakfast I had tooday was aweeesome",
                       "the breakfast I had today was awesome",
                       "breakfast I had today was awesome"];
