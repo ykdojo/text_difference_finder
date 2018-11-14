@@ -20,14 +20,14 @@
 
     <script>
       function showTextDiffResult(s1, s2, expected) {
-        let result = `<p>
-                     <div><span class='bold-italic'>Original text: </span> ${s1} </div>
-                     <div><span class='bold-italic'>Edited text: </span> ${s2} </div>
-                     <div><span class='bold-italic'>Expected LCS: </span> ${expected} </div>
-                     <div><span class='bold-italic'>Actual LCS: </span> ${textDiff(s1, s2).result} </div>
-                     <div><span class='bold-italic'>Deleted: </span> ${textDiff(s1, s2).result1HTML} </div>
-                     <div><span class='bold-italic'>Added: </span> ${textDiff(s1, s2).result2HTML} </div>
-                     </p>`;
+        let result = "<p>" +
+                     "<div><span class='bold-italic'>Original text: </span>" + s1 + "</div>" +
+                     "<div><span class='bold-italic'>Edited text: </span>" + s2 + "</div>" +
+                     "<div><span class='bold-italic'>Expected LCS: </span>" + expected + "</div>" +
+                     "<div><span class='bold-italic'>Actual LCS: </span>" + textDiff(s1, s2).result + "</div>" +
+                     "<div><span class='bold-italic'>Deleted: </span>" + textDiff(s1, s2).result1HTML + "</div>" +
+                     "<div><span class='bold-italic'>Added: </span>" + textDiff(s1, s2).result2HTML + "</div>" +
+                     "</p>";
         return result;
       }
 
