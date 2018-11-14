@@ -33,6 +33,15 @@
         return result;
       }
 
+      function pushResult(resultArr, strToCompare, index,
+                          indexNext, className, commonChar) {
+        if (indexNext > index) {
+          let changed = strToCompare.substring(index, indexNext);
+          resultArr.push(`<span class='${className}'>${changed}</span>`);
+        }
+        resultArr.push(commonChar);
+      }
+
       function textDiff(s1, s2) {
         let memo = Array(s1.length).fill(null).map(
           e => Array(s2.length)
@@ -48,21 +57,20 @@
           let commonChar = tdResult[i];
 
           i1Next = s1.indexOf(commonChar, i1);
-          if (i1Next > i1) {
-            s1Deleted = s1.substring(i1, i1Next);
-            s1Result.push(`<span class='deleted'>${s1Deleted}</span>`);
-          }
-          s1Result.push(commonChar);
+          pushResult(s1Result, s1, i1, i1Next, 'deleted', commonChar);
           i1 = i1Next + 1;
 
           i2Next = s2.indexOf(commonChar, i2);
-          if (i2Next > i2) {
-            s2Added = s2.substring(i2, i2Next);
-            s2Result.push(`<span class='added'>${s2Added}</span>`);
-          }
-          s2Result.push(commonChar);
+          pushResult(s2Result, s2, i2, i2Next, 'added', commonChar);
           i2 = i2Next + 1;
         }
+
+        i1Next = s1.length;
+        pushResult(s1Result, s1, i1, i1Next, 'deleted', '');
+
+        i2Next = s2.length;
+        pushResult(s2Result, s2, i2, i2Next, 'added', '');
+
         return {lca: tdResult, s1Result: s1Result.join(''), s2Result: s2Result.join('')};
       }
 
