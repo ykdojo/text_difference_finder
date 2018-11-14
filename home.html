@@ -50,7 +50,7 @@
         let s2Result = [];
         let i1 = 0;
         let i2 = 0;
-        for (i = 0; i < tdResult.length; i++){
+        for (i = 0; i < tdResult.length; i++) {
           let commonChar = tdResult[i];
 
           i1Next = s1.indexOf(commonChar, i1);
@@ -68,7 +68,9 @@
         i2Next = s2.length;
         pushResult(s2Result, s2, i2, i2Next, 'added', '');
 
-        return {lca: tdResult, s1Result: s1Result.join(''), s2Result: s2Result.join('')};
+        return {lca: tdResult,
+                s1Result: s1Result.join(''),
+                s2Result: s2Result.join('')};
       }
 
       function TD(s1, s2, i1, i2, memo) {
