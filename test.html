@@ -12,14 +12,14 @@
     <div id="results"></div>
     <script src="text_difference.js"></script>
     <script>
-      function showTextDiffResult(s1, s2, expected) {
-        let textDiffResult = textDiff(s1, s2);
+      function showTextDiffResult(s1, s2, expected, splitByChar) {
+        let textDiffResult = textDiff(s1, s2, splitByChar);
         let result =
         `<p>
           <div><span class='bold-italic'>Original text: </span>${s1}</div>
           <div><span class='bold-italic'>Edited text: </span>${s2}</div>
           <div><span class='bold-italic'>Expected result: </span>${expected}</div>
-          <div><span class='bold-italic'>Actual result: </span>${textDiffResult.lca}</div>
+          <div><span class='bold-italic'>Actual result: </span>${textDiffResult.lcs}</div>
           <div><span class='bold-italic'>Deleted: </span>${textDiffResult.s1Result}</div>
           <div><span class='bold-italic'>Added: </span>${textDiffResult.s2Result}</div>
         </p>`;
@@ -28,22 +28,22 @@
 
       let testSet0 = ["breakfast I had tooday was aweeesome",
                       "The breakfast I had today was awesome.",
-                      "breakfast I had today was awesome"];
+                      "breakfast I had today was awesome", false];
       let testSet1 = ["I am waiting for snow from this morning until now.",
                       "I’ve been waiting for snow since this morning.",
-                      "waiting for now this morning."];
+                      "waiting for now this morning.", false];
       let testSet2 = ["even I have French nationality. I still make mistake when I write my own sentences .",
                       "Even though I’m French, I still make mistakes when I write in French.",
-                      "French I still make when I write."];
+                      "French I still make when I write.", false];
       let testSet3 = ["今朝はとても寒い！冬ははやく来る。",
                       "今朝はとても寒いですね！冬がもうすぐ来そうです。",
-                      "今朝はとても寒い！冬来。"];
+                      "今朝はとても寒い！冬来。", true];
       let testSet4 = ["わたしのしごとのま、わたいはそうだいなけしきをみました",
                       "しごとのあいまにきれいなけしきをみました。",
-                      "しごとのいいなけしきをみました"];
+                      "しごとのいいなけしきをみました", true];
       let testSet5 = ["Duolingoは本とに凄いアプリです。",
                       "Duolingoは本当に凄いアプリです。",
-                      "Duolingoは本に凄いアプリです。"];
+                      "Duolingoは本に凄いアプリです。", true];
 
       // let testSets = [testSet0, testSet1, testSet2];
       let testSets = [testSet0, testSet1, testSet2,
@@ -51,7 +51,7 @@
 
       testSets.forEach(function(testSet) {
         document.getElementById("results").innerHTML +=
-          showTextDiffResult(testSet[0], testSet[1], testSet[2]);
+          showTextDiffResult(testSet[0], testSet[1], testSet[2], testSet[3]);
       });
     </script>
   </body>
