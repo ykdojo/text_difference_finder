@@ -6,17 +6,9 @@ function textDiff(s1, s2, splitByChar) {
     s1Split = s1;
     s2Split = s2;
   } else {
-    s1SplitBySpace = s1.split(' ');
-    s1Split = Array(s1SplitBySpace.length * 2 - 1).fill(" ");
-    for (let i = 0; i < s1SplitBySpace.length; i++) {
-      s1Split[i * 2] = s1SplitBySpace[i];
-    }
-
-    s2SplitBySpace = s2.split(' ');
-    s2Split = Array(s2SplitBySpace.length * 2 - 1).fill(" ");
-    for (let i = 0; i < s2SplitBySpace.length; i++) {
-      s2Split[i * 2] = s2SplitBySpace[i];
-    }
+    let reg = /([ .,])/g;
+    s1Split = s1.split(reg);
+    s2Split = s2.split(reg);
   }
   let tdResult = LCS(s1Split, s2Split, 0, 0, memo);
 
