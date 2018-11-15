@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="text_difference.css">
+  </head>
+  <body>
+    <div id="results"></div>
+    <script src="text_difference.js"></script>
+    <script>
+      function showTextDiffResult(s1, s2, expected) {
+        let textDiffResult = textDiff(s1, s2);
+        let result =
+        `<p>
+          <div><span class='bold-italic'>Original text: </span>${s1}</div>
+          <div><span class='bold-italic'>Edited text: </span>${s2}</div>
+          <div><span class='bold-italic'>Expected result: </span>${expected}</div>
+          <div><span class='bold-italic'>Actual result: </span>${textDiffResult.lca}</div>
+          <div><span class='bold-italic'>Deleted: </span>${textDiffResult.s1Result}</div>
+          <div><span class='bold-italic'>Added: </span>${textDiffResult.s2Result}</div>
+        </p>`;
+        return result;
+      }
+
+      let testSet0 = ["abcde", "bfkcdepqr", "bcde"];
+      let testSet1 = ["aaa", "bbb", ""];
+      let testSet2 = ["abc", "defg", ""];
+      let testSet3 = ["abd", "bcd", "bd"];
+      let testSet4 = ["abcd", "afkd", "ad"];
+      let testSet5 = ["breakfast I had tooday was aweeesome",
+                      "the breakfast I had today was awesome",
+                      "breakfast I had today was awesome"];
+      let testSet6 = [Array(500).join('a'), Array(500).join('b'), ""];
+
+      // let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5];
+      let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5, testSet6];
+
+      testSets.forEach(function(testSet) {
+        document.getElementById("results").innerHTML +=
+          showTextDiffResult(testSet[0], testSet[1], testSet[2]);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="text_difference.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>text difference finder</h1>
+      <form id="textForm" method="submit">
+        <label for="original">Original Text</label>
+        <textarea class="materialize-textarea" name="original"
+                  type="text" id="originalText"></textarea>
+        <label for="changed">Changed Text</label>
+        <textarea class="materialize-textarea" name="changed"
+                  type="text" id="changedText"></textarea>
+      </form>
+      <p id="deletions"></p>
+      <p id="additions"></p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="text_difference.js"></script>
+    <script>
+      let originalText = document.getElementById("originalText");
+      let changedText = document.getElementById("changedText");
+      changedText.addEventListener("input", event => {
+        let textDiffResult = textDiff(originalText.value, changedText.value);
+        document.getElementById("deletions").innerHTML = "<strong>Deletions</strong><br/>" + textDiffResult.s1Result;
+        document.getElementById("additions").innerHTML = "<strong>Additions</strong><br/>" + textDiffResult.s2Result;
+      });
+    </script>
+  </body>
+</html>
