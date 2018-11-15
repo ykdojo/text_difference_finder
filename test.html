@@ -26,18 +26,28 @@
         return result;
       }
 
-      let testSet0 = ["abcde", "bfkcdepqr", "bcde"];
-      let testSet1 = ["aaa", "bbb", ""];
-      let testSet2 = ["abc", "defg", ""];
-      let testSet3 = ["abd", "bcd", "bd"];
-      let testSet4 = ["abcd", "afkd", "ad"];
-      let testSet5 = ["breakfast I had tooday was aweeesome",
-                      "the breakfast I had today was awesome",
+      let testSet0 = ["breakfast I had tooday was aweeesome",
+                      "The breakfast I had today was awesome.",
                       "breakfast I had today was awesome"];
-      let testSet6 = [Array(500).join('a'), Array(500).join('b'), ""];
+      let testSet1 = ["I am waiting for snow from this morning until now.",
+                      "I’ve been waiting for snow since this morning.",
+                      "waiting for now this morning."];
+      let testSet2 = ["even I have French nationality. I still make mistake when I write my own sentences .",
+                      "Even though I’m French, I still make mistakes when I write in French.",
+                      "French I still make when I write."];
+      let testSet3 = ["今朝はとても寒い！冬ははやく来る。",
+                      "今朝はとても寒いですね！冬がもうすぐ来そうです。",
+                      "今朝はとても寒い！冬来。"];
+      let testSet4 = ["わたしのしごとのま、わたいはそうだいなけしきをみました",
+                      "しごとのあいまにきれいなけしきをみました。",
+                      "しごとのいいなけしきをみました"];
+      let testSet5 = ["Duolingoは本とに凄いアプリです。",
+                      "Duolingoは本当に凄いアプリです。",
+                      "Duolingoは本に凄いアプリです。"];
 
-      // let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5];
-      let testSets = [testSet0, testSet1, testSet2, testSet3, testSet4, testSet5, testSet6];
+      // let testSets = [testSet0, testSet1, testSet2];
+      let testSets = [testSet0, testSet1, testSet2,
+                      testSet3, testSet4, testSet5];
 
       testSets.forEach(function(testSet) {
         document.getElementById("results").innerHTML +=
