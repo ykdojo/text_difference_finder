@@ -1,5 +1,13 @@
-function textDiff(s1, s2) {
-  lcs = LCS(s1, s2);
+function textDiff(s1, s2, splitByWords) {
+  let lcs;
+  if (splitByWords) {
+    let reg = /([ .,])/g;
+    split1 = s1.split(reg);
+    split2 = s2.split(reg);
+    lcs = LCS(split1, split2);
+  } else {
+    lcs = LCS(s1, s2);
+  }
 
   let i;
   let i1 = 0; let i1Next = 0;

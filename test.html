@@ -21,23 +21,23 @@
     <script>
       let testSet0 = ["ABCD",
                       "AFKD",
-                      "AD"];
+                      "AD", false];
       let testSet1 = ["I am waiting for snow.",
                       "I've been waiting for snow.",
-                      "I  waiting for snow."];
+                      "I  waiting for snow.", true];
       let testSet2 = ["breakfast I had tooday was awsome.",
                       "the breakfast I had today was awesome",
-                      "breakfast I had today was awsome"];
+                      "breakfast I had today was awsome", true];
       // let testSets = [testSet0];
       let testSets = [testSet0, testSet1, testSet2];
 
       testSets.forEach(function(testSet) {
         document.getElementById("results").innerHTML +=
-          showTextDiffResult(testSet[0], testSet[1], testSet[2]);
+          showTextDiffResult(testSet[0], testSet[1], testSet[2], testSet[3]);
       });
 
-      function showTextDiffResult(original, edited, expected) {
-        let textDiffResult = textDiff(original, edited);
+      function showTextDiffResult(original, edited, expected, splitByWords) {
+        let textDiffResult = textDiff(original, edited, splitByWords);
         let result =
         `<p>
           <div><span class='bold-italic'>Original text: </span>${original}</div>
