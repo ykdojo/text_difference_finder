@@ -1,6 +1,19 @@
+/* Input:
+ * - s1: the first string (the original string)
+ * - s2: the second string (the edited string)
+ * - splitByWords: true if we want to compare s1 and s2
+ *       by words instead of by characters.
+ *
+ * Output:
+ * {lcs: the longest common subsequence between s1 and s2,
+ *  deleted: an HTML snippet that shows which parts of s1 have been deleted,
+ *  added: an HTML snippet that shows which parts of s2 have been added}
+ */
+
 function textDiff(s1, s2, splitByWords) {
   let lcs;
   if (splitByWords) {
+    // This splits s1 and s2 by words.
     let reg = /([ .,])/g;
     split1 = s1.split(reg);
     split2 = s2.split(reg);
@@ -44,6 +57,9 @@ function pushResult(resultArray, stringToPush, className) {
   }
 }
 
+// A dynamic programming (memoized) approach
+// to find the LCS between s1 and s2.
+// s1 and s2 could be either strings or arrays of strings.
 function LCS(s1, s2) {
   let memo = [...Array(s1.length)].map(e => Array(s2.length));
   return helper(s1, s2, 0, 0, memo);
