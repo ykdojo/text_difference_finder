@@ -1,58 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="text_difference.css">
+    <style>
+      .bold-italic {
+        font-weight: bold;
+        font-style: italic;
+      }
+      .deleted {
+        color: red;
+        text-decoration: line-through;
+      }
+      .added {
+        color: blue;
+      }
+    </style>
   </head>
   <body>
     <div id="results"></div>
+
     <script src="text_difference.js"></script>
     <script>
-      function showTextDiffResult(s1, s2, expected, splitByChar) {
-        let textDiffResult = textDiff(s1, s2, splitByChar);
-        let result =
-        `<p>
-          <div><span class='bold-italic'>Original text: </span>${s1}</div>
-          <div><span class='bold-italic'>Edited text: </span>${s2}</div>
-          <div><span class='bold-italic'>Expected result: </span>${expected}</div>
-          <div><span class='bold-italic'>Actual result: </span>${textDiffResult.lcs}</div>
-          <div><span class='bold-italic'>Deleted: </span>${textDiffResult.s1Result}</div>
-          <div><span class='bold-italic'>Added: </span>${textDiffResult.s2Result}</div>
-        </p>`;
-        return result;
-      }
-
-      let testSet0 = ["breakfast I had tooday was aweeesome",
-                      "The breakfast I had today was awesome.",
-                      "breakfast I had today was awesome", false];
-      let testSet1 = ["I am waiting for snow from this morning until now.",
-                      "I’ve been waiting for snow since this morning.",
-                      "waiting for now this morning.", false];
-      let testSet2 = ["even I have French nationality. I still make mistake when I write my own sentences .",
-                      "Even though I’m French, I still make mistakes when I write in French.",
-                      "French I still make when I write.", false];
-      let testSet3 = ["今朝はとても寒い！冬ははやく来る。",
-                      "今朝はとても寒いですね！冬がもうすぐ来そうです。",
-                      "今朝はとても寒い！冬来。", true];
-      let testSet4 = ["わたしのしごとのま、わたいはそうだいなけしきをみました",
-                      "しごとのあいまにきれいなけしきをみました。",
-                      "しごとのいいなけしきをみました", true];
-      let testSet5 = ["Duolingoは本とに凄いアプリです。",
-                      "Duolingoは本当に凄いアプリです。",
-                      "Duolingoは本に凄いアプリです。", true];
-
-      // let testSets = [testSet0, testSet1, testSet2];
-      let testSets = [testSet0, testSet1, testSet2,
-                      testSet3, testSet4, testSet5];
+      let testSet0 = ["ABCD",
+                      "AFKD",
+                      "AD"];
+      let testSet1 = ["I am waiting for snow.",
+                      "I've been waiting for snow.",
+                      "I  waiting for snow."];
+      let testSet2 = ["breakfast I had tooday was awsome.",
+                      "the breakfast I had today was awesome",
+                      "breakfast I had today was awsome"];
+      // let testSets = [testSet0];
+      let testSets = [testSet0, testSet1, testSet2];
 
       testSets.forEach(function(testSet) {
         document.getElementById("results").innerHTML +=
-          showTextDiffResult(testSet[0], testSet[1], testSet[2], testSet[3]);
+          showTextDiffResult(testSet[0], testSet[1], testSet[2]);
       });
+
+      function showTextDiffResult(original, edited, expected) {
+        let textDiffResult = textDiff(original, edited);
+        let result =
+        `<p>
+          <div><span class='bold-italic'>Original text: </span>${original}</div>
+          <div><span class='bold-italic'>Edited text: </span>${edited}</div>
+          <div><span class='bold-italic'>Expected result: </span>${expected}</div>
+          <div><span class='bold-italic'>Actual result: </span>${textDiffResult.lcs}</div>
+          <div><span class='bold-italic'>Deleted: </span>${textDiffResult.deleted}</div>
+          <div><span class='bold-italic'>Added: </span>${textDiffResult.added}</div>
+        </p>`;
+        return result;
+      }
     </script>
   </body>
 </html>

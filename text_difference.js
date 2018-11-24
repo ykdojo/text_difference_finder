@@ -1,46 +1,48 @@
-function textDiff(s1, s2, splitByChar) {
-  let memo = [...Array(s1.length)].map(e => Array(s2.length));
-  let s1Split;
-  let s2Split;
-  if (splitByChar) {
-    s1Split = s1;
-    s2Split = s2;
-  } else {
-    let reg = /([ .,])/g;
-    s1Split = s1.split(reg);
-    s2Split = s2.split(reg);
-  }
-  let tdResult = LCS(s1Split, s2Split, 0, 0, memo);
+function textDiff(s1, s2) {
+  lcs = LCS(s1, s2);
 
-  let s1Result = [];
-  let s2Result = [];
-  let i1 = 0;
-  let i2 = 0;
-  for (i = 0; i < tdResult.length; i++) {
-    let commonStr = tdResult[i];
+  let i;
+  let i1 = 0; let i1Next = 0;
+  let i2 = 0; let i2Next = 0;
+  let result1 = [];
+  let result2 = [];
 
-    i1Next = s1.indexOf(commonStr, i1);
-    pushResult(s1Result, s1, i1, i1Next, 'deleted', commonStr);
+  for (i = 0; i < lcs.length; i++) {
+    i1Next = s1.indexOf(lcs[i], i1);
+    i2Next = s2.indexOf(lcs[i], i2);
+    pushResult(result1, s1.substring(i1, i1Next), 'deleted');
+    pushResult(result2, s2.substring(i2, i2Next), 'added');
+    pushResult(result1, lcs[i]);
+    pushResult(result2, lcs[i]);
     i1 = i1Next + 1;
-
-    i2Next = s2.indexOf(commonStr, i2);
-    pushResult(s2Result, s2, i2, i2Next, 'added', commonStr);
     i2 = i2Next + 1;
   }
+  pushResult(result1, s1.substring(i1), 'deleted');
+  pushResult(result2, s2.substring(i2), 'added');
 
-  i1Next = s1.length;
-  pushResult(s1Result, s1, i1, i1Next, 'deleted', '');
-
-  i2Next = s2.length;
-  pushResult(s2Result, s2, i2, i2Next, 'added', '');
-
-  return {lcs: tdResult,
-          s1Result: s1Result.join(''),
-          s2Result: s2Result.join('')};
+  return {lcs: lcs,
+          deleted: result1.join(''),
+          added: result2.join('')};
 }
 
-function LCS(s1, s2, i1, i2, memo) {
-  if (s1.length == i1 || s2.length == i2 ) {
+function pushResult(resultArray, stringToPush, className) {
+  if (!stringToPush) {
+    return;
+  }
+  if (className) {
+    resultArray.push(`<span class="${className}">${stringToPush}</span>`);
+  } else {
+    resultArray.push(stringToPush);
+  }
+}
+
+function LCS(s1, s2) {
+  let memo = [...Array(s1.length)].map(e => Array(s2.length));
+  return helper(s1, s2, 0, 0, memo);
+}
+
+function helper(s1, s2, i1, i2, memo) {
+  if (i1 == s1.length || i2 == s2.length) {
     return '';
   }
 
@@ -49,27 +51,18 @@ function LCS(s1, s2, i1, i2, memo) {
   }
 
   if (s1[i1] == s2[i2]) {
-    memo[i1][i2] = s1[i1] + LCS(s1, s2, i1 + 1, i2 + 1, memo);
+    memo[i1][i2] = s1[i1] + helper(s1, s2, i1 + 1, i2 + 1, memo);
     return memo[i1][i2];
   }
 
   let result;
-  let resultA = LCS(s1, s2, i1 + 1, i2, memo);
-  let resultB = LCS(s1, s2, i1, i2 + 1, memo);
-  if(resultA.length >= resultB.length) {
+  let resultA = helper(s1, s2, i1 + 1, i2, memo);
+  let resultB = helper(s1, s2, i1, i2 + 1, memo);
+  if (resultA.length > resultB.length) {
     result = resultA;
   } else {
     result = resultB;
   }
   memo[i1][i2] = result;
   return memo[i1][i2];
-}
-
-function pushResult(resultArr, strToCompare, index,
-                    indexNext, className, commonStr) {
-  if (indexNext > index) {
-    let changed = strToCompare.substring(index, indexNext);
-    resultArr.push(`<span class='${className}'>${changed}</span>`);
-  }
-  resultArr.push(commonStr);
 }
