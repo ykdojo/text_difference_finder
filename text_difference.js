@@ -58,7 +58,7 @@ function pushResult(resultArray, stringToPush, className) {
 }
 
 // A dynamic programming (memoized) approach
-// to find the LCS between s1 and s2.
+// to find a longest common subsequence between s1 and s2.
 // s1 and s2 could be either strings or arrays of strings.
 function LCS(s1, s2) {
   let memo = [...Array(s1.length)].map(e => Array(s2.length));
